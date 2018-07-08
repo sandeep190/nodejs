@@ -1,0 +1,116 @@
+and query
+db.students.find({
+    $and:[
+        {"_id":{$lt:19}},
+        {"_id":{$gt:10}}
+        ]
+        })
+
+OR query
+
+db.students.find({
+    $or:[ { $and:[
+        {"_id":{$lt:15}},
+        {"_id":{$gt:13}}
+        ]},
+    {
+ $or:[
+        {"_id":{$lt:9}},
+        {"_id":{$gt:5}}
+    ]
+    }]
+    
+    
+})
+db.students.find({
+    $and:[
+        {"scores.score":{$gt:40}},
+        {"scores.type":"exam"}
+    ]
+})
+
+
+
+db.students.aggregate([
+    {$unwind:"$scores"},
+    {$match:{"scores.score":{$gt:99}}},
+    {$match:{"scores.type":"exam"}}])
+
+
+db.students.aggregate([     {$unwind:"$scores"},    
+ {$match:{"scores.score":{$gt:70},"scores.score":{$lt:80},"scores.type":"homework"}}]);
+
+
+db.students.aggregate([
+    {$unwind:"$scores"},
+    {$match: {"scores.score": {"$gt":70},
+              "scores.type":"homework"}
+             },
+    { $match : {"scores.score": {$lt:80}}}
+]);
+
+db.students.aggregate([     {$unwind:"$scores"},     {$match: { $and: [ {"scores.score":{$gt:70}}, {"sdres.score": {$lt:80}}],                "scores.type":"homework"} 
+
+db.students.aggregate([
+    {"$unwind": "$scores"},
+    { "$group":{"_id":"$name",totalScore:{$sum:"$scores.score" } }},
+    {"$project":{"totalScore":0}}
+])
+
+// multi insert command 
+db.product.insert([{
+   "_id" : 1,
+   "fruit" : [ "apples", "oranges" ],
+   "in_stock" : { "oranges" : 20, "apples" : 60 },
+   "on_order" : { "oranges" : 35, "apples" : 75 }
+},
+{
+   "_id" : 2,
+   "vegetables" : [ "beets", "yams" ],
+   "in_stock" : { "beets" : 130, "yams" : 200 },
+   "on_order" : { "beets" : 90, "yams" : 145 }
+}
+]);
+
+// replacing the root of any json
+
+db.product.aggregate([{
+    $replaceRoot:{ newRoot:"$in_stock"}}
+    ]);
+
+
+// finding date with different attributes
+db.sales.aggregate(
+   [
+     {
+       $project:
+         {
+           year: { $year: "$date" },
+           month: { $month: "$date" },
+           day: { $dayOfMonth: "$date" },
+           hour: { $hour: "$date" },
+           minutes: { $minute: "$date" },
+           seconds: { $second: "$date" },
+           milliseconds: { $millisecond: "$date" },
+           dayOfYear: { $dayOfYear: "$date" },
+           dayOfWeek: { $dayOfWeek: "$date" },
+           week: { $week: "$date" }
+         }
+     }
+   ]
+)
+
+db.sales.update(
+   { _id: 1 },
+   {
+     $currentDate: {
+        lastModified: true,
+        "cancellation.date": { $type: "timestamp" }
+     },
+     $set: {
+        status: "D",
+        "cancellation.reason": "user request"
+     }
+   }
+)
+

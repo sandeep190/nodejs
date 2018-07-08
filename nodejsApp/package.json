@@ -1,0 +1,15 @@
+{
+  "name": "nodejsapp",
+  "version": "1.0.0",
+  "description": "this is use for calculation porpose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "calculater sum plus"
+  },
+  "author": "sandeep maurya",
+  "license": "ISC"
+}

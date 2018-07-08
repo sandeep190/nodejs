@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="./../client/js/jquery.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sandeep Ji</title>
+</head>
+<body>
+    <% include partial/header.html %>
+   <form method="POST" action="/userdata">
+      Enter Name <input type="text" name="name"><br>
+       Address <input type="text" name="age"><br>
+       <input type="submit">
+       
+   </form>
+
+   <ul>
+    <% person.forEach(function(val, key){
+        if(val.age>20){ %>
+     <li><%=val.id%>-- <%=val.name%></li>
+     <% } }); %>
+    </ul>
+    <% include partial/footer.html %>
+</body>
+</html>
