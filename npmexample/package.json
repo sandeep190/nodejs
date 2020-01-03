@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "mongojs": "^2.5.0",
-    "mongoose": "5.0.5"
+    "mongoose": "5.7.5"
   }
 }
